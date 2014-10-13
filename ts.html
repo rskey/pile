@@ -1,6 +1,66 @@
-<html> 
-<script language="javascript" src="random_walker.js" /> 
-<script language="javascript"> 
-f(); 
-</script> 
-</html> 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript</title>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    var canvas = document.getElementById("canvas");
+    var processing = new Processing(canvas, function(processing) {
+        processing.size(400, 400);
+        processing.background(0xFFF);
+
+        var mouseIsPressed = false;
+        processing.mousePressed = function () { mouseIsPressed = true; };
+        processing.mouseReleased = function () { mouseIsPressed = false; };
+
+        var keyIsPressed = false;
+        processing.keyPressed = function () { keyIsPressed = true; };
+        processing.keyReleased = function () { keyIsPressed = false; };
+
+        function getImage(s) {
+            var url = "https://www.kasandbox.org/stylesheets/scratchpads-exec-package/images/" + s + ".png";
+            processing.externals.sketch.imageCache.add(url);
+            return processing.loadImage(url);
+        }
+
+        with (processing) {
+
+
+            // INSERT YOUR KHAN ACADEMY PROGRAM HERE
+var Walker = function() {
+    this.x = width/2;
+    this.y = height/2;
+};
+
+Walker.prototype.display = function() {
+    strokeWeight(3);
+    stroke(0, 0, 0);
+    point(this.x, this.y);
+};
+
+Walker.prototype.walk = function() {
+ 
+    var xStepSize = random(-5, 5);
+    var yStepSize = random(-5, 5);
+    
+    this.x += xStepSize;
+    this.y += yStepSize;
+};
+
+var w = new Walker();
+
+var draw = function() {
+    w.walk();
+    w.display();
+};
+
+        }
+        if (typeof draw !== 'undefined') processing.draw = draw;
+    });
+  </script>
+</body>
+</html>
+
